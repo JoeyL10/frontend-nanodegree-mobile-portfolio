@@ -9,7 +9,7 @@ module.exports = function(grunt) {
           engine: 'im',
           sizes: [{
             name: 'sm',
-            width: '30%',
+            width: '20%',
             suffix: '',
             quality: 20
           },{
@@ -31,8 +31,19 @@ module.exports = function(grunt) {
     },
   });
 
+    grunt.initConfig({
+      uglify: {
+        my_target: {
+          files: {
+            'views/js/main.min.js': ['views/js/main.js']
+          }
+        }
+      }
+    });
+
   grunt.loadNpmTasks('grunt-responsive-images');
   grunt.registerTask('default', ['responsive_images']);
+  grunt.loadNpmTasks('grunt-contrib-uglify');
 
 };
 
