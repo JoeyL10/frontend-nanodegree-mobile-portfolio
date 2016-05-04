@@ -1,21 +1,16 @@
 
-var mozjpeg = require('imagemin-mozjpeg');
+// var mozjpeg = require('imagemin-mozjpeg');
 module.exports = function(grunt) {
 
 grunt.initConfig({
   imagemin: {                          // Task        
-      options: {                       // Target options
-        optimizationLevel: 3,
-        svgoPlugins: [{ removeViewBox: false }],
-        use: [mozjpeg()]
+      options: {
+        progressive: true,                       // Target options
+        optimizationLevel: 7
+        
       },
-      // files: {                         // Dictionary of files
-      //   'dist/img.png': 'src/img.png', // 'destination': 'source'
-      //   'dist/img.jpg': 'src/img.jpg',
-      //   'dist/img.gif': 'src/img.gif'
-      // }
    
-    dynamic: {                         // Another target
+      dist: {                // Another target
       files: [{
         expand: true,                  // Enable dynamic expansion
         cwd: 'img/',                   // Src matches are relative to this path
