@@ -1,5 +1,5 @@
 
-// var mozjpeg = require('imagemin-mozjpeg');
+
 module.exports = function(grunt) {
 
 grunt.initConfig({
@@ -18,14 +18,27 @@ grunt.initConfig({
         dest: 'dist/'                // Destination path prefix
       }]
     }
-  }
+  },
+
+  uglify: {
+   dist: {
+      options: {
+         banner: '/*! main.js | Udacity WebOp Project |'
+      },
+      files: {
+         'views/js/main.min.js': ['views/js/main.js']
+      }
+   }
+}
+
+
 });
 
 
   grunt.loadNpmTasks('grunt-contrib-imagemin');
-  grunt.registerTask('default', ['imagemin']);
   grunt.loadNpmTasks('grunt-contrib-uglify');
-  
+  grunt.registerTask('default', ['uglify']);
+   
 
 };
 
