@@ -23,7 +23,7 @@ grunt.initConfig({
   uglify: {
    dist: {
       options: {
-         banner: '/*! main.js | Udacity WebOp Project |'
+         banner: ''
       },
       files: {
          'views/js/main.min.js': ['views/js/main.js']
