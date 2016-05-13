@@ -13,7 +13,7 @@ grunt.initConfig({
       dist: {                // Another target
       files: [{
         expand: true,                  // Enable dynamic expansion
-        cwd: 'dist/',                   // Src matches are relative to this path
+        cwd: 'img/',                   // Src matches are relative to this path
         src: ['**/*.{png,jpg,gif}'],   // Actual patterns to match
         dest: 'dist/'                // Destination path prefix
       }]
@@ -26,7 +26,7 @@ grunt.initConfig({
          banner: ''
       },
       files: {
-         'views/js/main.min.js': ['views/js/main.js']
+         'views/main.min.js': ['views/js/main.js']
       }
    }
 }
