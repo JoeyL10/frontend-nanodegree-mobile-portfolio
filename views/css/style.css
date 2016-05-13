@@ -29,6 +29,8 @@ form {
   font-weight: 800;
 }
 
+/* Added css will-change attribute to hint to browser to create a new compositor layer.  TranslateZ was added for older browser support */
+
 .mover {
   will-change: transform;
   transform: translateZ(0);
