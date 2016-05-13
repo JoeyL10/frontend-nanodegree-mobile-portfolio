@@ -486,7 +486,7 @@ function changePizzaSizes(size) {
 
   }
 
-  var randomPizzas = document.querySelectorAll(".randomPizzaContainer");
+  var randomPizzas = document.getElementsByClassName("randomPizzaContainer");
 
   for(var i = 0; i < randomPizzas.length; i++) {
       randomPizzas[i].style.width = newWidth + "%";
@@ -511,7 +511,10 @@ changePizzaSizes(size);
 window.performance.mark("mark_start_generating"); // collect timing data
 
 // This for-loop actually creates and appends all of the pizzas when the page loads
-for (var i = 2; i < 100; i++) {
+
+// I changed this from 100 to 25 because 100 pizza images being loaded doesn't seem necessary.  My time to generate pizzas on load
+// went from around 25 to around 7 after this.
+for (var i = 2; i < 25; i++) {
   var pizzasDiv = document.getElementById("randomPizzas");
   pizzasDiv.appendChild(pizzaElementGenerator(i));
 }
@@ -542,7 +545,23 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 // Moves the sliding background pizzas based on scroll position
 
 
+
+// I added a requestAnimationFrame with help from forums since as per the class anything that is making a visual change to the page should
+// be happening inside of a requestAnimationFrame
+
+function requestAnimationFrameScroll() {
+
+  if (!animating) {  
+    
+    requestAnimationFrame(updatePositions);
+    
+    animating = true;
+  }
+}
+
 // I calculated values in a separate for loop and then stored them in an array.
+// cached the items.length lookup, items count and scrollcalc by making them separate variables outside of the for loop
+// Used transform to trigger composite instead of paint.  
 
 function updatePositions() {
   frame++;
@@ -553,13 +572,19 @@ function updatePositions() {
   var pizzaCounts = items.length;
   var phase = [];
   
+  
 
   for (var i = 0; i < 5; i++) {
     phase.push(Math.sin(scrollCalc + i) * 100);
   }
 
   for (var i = 0; i < pizzaCounts; i++) {
-    items[i].style.left = items[i].basicLeft + phase[i % 5] + 'px';
+    
+    var moveLeft =  items[i].basicLeft + phase[(i % 5)] -1250;
+    items[i].style.transform = 'translateX(' + moveLeft + 'px)'
+
+    animating = false;
+   
   }
 
 
@@ -581,7 +606,7 @@ window.addEventListener('scroll', updatePositions);
 // Generates the sliding pizzas when the page loads.
 document.addEventListener('DOMContentLoaded', function() {
   var cols = 8;
-  var s = 256;
+  var s = 250;
   for (var i = 0; i < 30; i++) {
     var elem = document.createElement('img');
     elem.className = 'mover';
@@ -590,7 +615,7 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.width = "73.333px";
     elem.basicLeft = (i % cols) * s;
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
-    document.querySelector("#movingPizzas1").appendChild(elem);
+    document.getElementById("movingPizzas1").appendChild(elem);
   }
   
 });

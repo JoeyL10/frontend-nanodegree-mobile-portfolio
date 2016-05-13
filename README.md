@@ -36,6 +36,41 @@ To optimize views/pizza.html, you will need to modify views/js/main.js until you
 
 You might find the FPS Counter/HUD Display useful in Chrome developer tools described here: [Chrome Dev Tools tips-and-tricks](https://developer.chrome.com/devtools/docs/tips-and-tricks).
 
+
+# Optimizations that I've made to improve performance
+
+
+    Inlined the print.css file by making a media query.  Currently it is a separate css file that induces another unnecessary roundtrip to the server.  This unblocks rendering.
+
+	Created separate css file for portrait view css and add media tag.  This is to minimize critical bytes and unblock rendering.
+
+	Added async tags in analytics and perfmatters js files to prevent parser blocking
+
+	Removed updatePositions() call at around line 591 from below #movingPizzas1 query selector.  Was forcing layout again.
+
+	In the updatePositions function made a variable out of (document.body.scrollTop/1250).  I checked console.log(phase, document.body.scrollTop / 1250) to see performance in console.
+
+	Optimize the updatePositions JS function by removing the phase variable from the for loop inside updatePositions.  It should be outside of the loop and setup as an empty array variable so that the scrollCalc variable.
+
+
+	I added a requestAnimationFrame with help from forums since as per the class anything that is making a visual change to the page should
+    be happening inside of a requestAnimationFrame
+
+	Quick optimization was to change the use of document.querySelectorAll(). This is one of the slowest methods to access our specified DOM elements. document.getElementsByClassName() is much faster so I've applied this to var items = document.getElementsByClassName('mover');  and var randomPizzas = document.getElementsByClassName("randomPizzaContainer");   Changed query selector to getElementById for movingPizzas1 too - document.getElementById("movingPizzas1").appendChild(elem);
+
+	Change src for images on index.html.  3 of 4 were making web calls even though we have images stored in a folder.
+
+	Compressed and resized images
+
+	Run grunt image optimization task on image folders
+
+	Run grunt uglify js task to minify JS.  Then make changes in pizza.html to read new main.min.js file.
+
+	Added will-change to tell the browser to put the mover element on a new compositor layer.  A transform of translateZ(0) was also added for older browsers.
+
+	Preload css google fonts file - https://github.com/filamentgroup/loadCSS/blob/master/README.md 
+
+
 ### Optimization Tips and Tricks
 * [Optimizing Performance](https://developers.google.com/web/fundamentals/performance/ "web performance")
 * [Analyzing the Critical Rendering Path](https://developers.google.com/web/fundamentals/performance/critical-rendering-path/analyzing-crp.html "analyzing crp")
