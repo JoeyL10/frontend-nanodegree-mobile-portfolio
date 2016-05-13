@@ -26,7 +26,7 @@ grunt.initConfig({
          banner: ''
       },
       files: {
-         'views/main.min.js': ['views/js/main.js']
+         'views/jsdist/main.min.js': ['views/jssrc/main.js']
       }
    }
 }
