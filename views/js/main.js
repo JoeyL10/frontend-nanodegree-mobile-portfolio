@@ -424,7 +424,7 @@ var resizePizzas = function(size) {
   changeSliderLabel(size);
 
 
-  // I'm not sure if I should remove this so I commented it out for now.  Quiz: Stop FSL mentioned that DX might serve no purpose  ***** JL
+  // Quiz: Stop FSL mentioned that DX might serve no purpose.  I optimized this per the class.***** JL
 
   //  // Returns the size difference to change a pizza element from one size to another. Called by changePizzaSlices(size).
   // function determineDx (elem, size) {
@@ -546,8 +546,6 @@ function logAverageFrame(times) {   // times is the array of User Timing measure
 
 
 
-// I added a requestAnimationFrame with help from forums since as per the class anything that is making a visual change to the page should
-// be happening inside of a requestAnimationFrame
 
 function requestAnimationFrameScroll() {
 
@@ -559,9 +557,12 @@ function requestAnimationFrameScroll() {
   }
 }
 
+
+
 // I calculated values in a separate for loop and then stored them in an array.
 // cached the items.length lookup, items count and scrollcalc by making them separate variables outside of the for loop
 // Used transform to trigger composite instead of paint.  
+
 
 function updatePositions() {
   frame++;
@@ -586,6 +587,12 @@ function updatePositions() {
     animating = false;
    
   }
+
+
+
+// I added a requestAnimationFrame with help from forums since as per the class anything that is making a visual change to the page should
+// be happening inside of a requestAnimationFrame
+
 
 
   // User Timing API to the rescue again. Seriously, it's worth learning.
@@ -617,5 +624,6 @@ document.addEventListener('DOMContentLoaded', function() {
     elem.style.top = (Math.floor(i / cols) * s) + 'px';
     document.getElementById("movingPizzas1").appendChild(elem);
   }
+
   
 });
